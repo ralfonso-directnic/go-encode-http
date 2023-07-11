@@ -3,6 +3,7 @@ package encodehttp
 import(
  "net/http"
  "encoding/json"
+ "io/ioutil"
 )
 
 
@@ -42,7 +43,7 @@ func Decode(req_json string) (*http.Request,error) {
 
   var req http.Request
 
-	perr := json.NewDecoder(req_json).Decode(&req)
+  perr := json.NewDecoder(req_json).Decode(&req)
 
   if perr!=nil { 
    return &req,perr

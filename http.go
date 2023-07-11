@@ -4,6 +4,7 @@ import(
  "net/http"
  "encoding/json"
  "io/ioutil"
+ "io"
 )
 
 
@@ -22,7 +23,7 @@ type HttpRequest struct {
 
 func Encode(r *http.Request) (*HttpRequest,error) {
 
-  var wrapper *RequestWrapper
+  var wrapper *HttpRequest
 
   body, rerr := ioutil.ReadAll(r.Body)
 
@@ -38,12 +39,12 @@ func Encode(r *http.Request) (*HttpRequest,error) {
 }
 
 
-func Decode(req_json string) (*http.Request,error) { 
+func Decode(req_reader io.Reader) (*http.Request,error) { 
 
 
   var req http.Request
 
-  perr := json.NewDecoder(req_json).Decode(&req)
+  perr := json.NewDecoder(req_reader).Decode(&req)
 
   if perr!=nil { 
    return &req,perr

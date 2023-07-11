@@ -23,7 +23,7 @@ type HttpRequest struct {
 
 func Encode(r *http.Request) (*HttpRequest,error) {
 
-  var wrapper *HttpRequest
+  wrapper := &HttpRequest{Request: r}
 
   body, rerr := ioutil.ReadAll(r.Body)
 
@@ -31,7 +31,6 @@ func Encode(r *http.Request) (*HttpRequest,error) {
     return wrapper,rerr
   }
 
-  wrapper.Request = r
   wrapper.Body = string(body)
 
   return wrapper,nil
